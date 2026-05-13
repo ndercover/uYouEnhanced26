@@ -27,7 +27,8 @@ PACKAGE_VERSION = $(YOUTUBE_VERSION)-$(UYOU_VERSION)
 INSTALL_TARGET_PROCESSES = YouTube
 TWEAK_NAME = uYouEnhanced
 DISPLAY_NAME = YouTube
-BUNDLE_ID = com.google.ios.youtube
+# Geänderte Bundle-ID verhindert Google-Konflikte auf iPadOS 18
+BUNDLE_ID = com.uYouEnhanced.ios.youtube
 
 $(TWEAK_NAME)_FILES := $(wildcard Sources/*.xm) $(wildcard Sources/*.x) $(wildcard Sources/*.m)
 $(TWEAK_NAME)_FRAMEWORKS = UIKit Foundation AVFoundation AVKit Photos Accelerate CoreMotion GameController VideoToolbox Security
@@ -57,7 +58,9 @@ $(TWEAK_NAME)_INJECT_DYLIBS = \
 $(TWEAK_NAME)_EMBED_LIBRARIES = $(THEOS_OBJ_DIR)/libcolorpicker.dylib
 $(TWEAK_NAME)_EMBED_FRAMEWORKS = $(_THEOS_LOCAL_DATA_DIR)/$(THEOS_OBJ_DIR_NAME)/install_Alderis.xcarchive/Products/var/jb/Library/Frameworks/Alderis.framework
 $(TWEAK_NAME)_EMBED_BUNDLES = $(wildcard Bundles/*.bundle)
-$(TWEAK_NAME)_EMBED_EXTENSIONS = $(wildcard Extensions/*.appex)
+
+# EXTENSIONS AUSKOMMENTIERT: Blockiert die Generierung fehlerhafter Plugins im IPA
+# $(TWEAK_NAME)_EMBED_EXTENSIONS = $(wildcard Extensions/*.appex)
 
 include $(THEOS)/makefiles/common.mk
 ifneq ($(JAILBROKEN),1)
@@ -66,7 +69,6 @@ include $(THEOS_MAKE_PATH)/aggregate.mk
 endif
 include $(THEOS_MAKE_PATH)/tweak.mk
 
-REMOVE_EXTENSIONS = 1
 CODESIGN_IPA = 0
 
 UYOU_PATH = Tweaks/uYou
