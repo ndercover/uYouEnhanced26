@@ -101,6 +101,15 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
+      - name: Force SDK Compatibility
+        run: |
+          cd $THEOS/sdks
+          # Trickst euer Makefile aus: Erstellt eine Kopie des geladenen SDKs mit dem Namen 17.5
+          cp -r iPhoneOS${{ inputs.sdk_version }}.sdk iPhoneOS17.5.sdk
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+
       - name: Setup Theos Jailed
         uses: actions/checkout@v5
         with:
